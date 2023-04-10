@@ -4,7 +4,7 @@ param($Timer)
 # Get the current universal time in the default string format
 $currentUTCtime = (Get-Date).ToUniversalTime()
 
-# Gets all Azure Resource Groups beginning with the name Bicep_ and removes them
+# Gets all Azure Resource Groups beginning with the name Bicep_ and removes them without waiting for the finish
 $rgs = Get-AzResourceGroup -Name Bicep_*
 foreach ($rg in $rgs) {
     Remove-AzResourceGroup -Name $rg.ResourceGroupName -AsJob
