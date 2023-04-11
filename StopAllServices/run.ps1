@@ -6,8 +6,10 @@ $currentUTCtime = (Get-Date).ToUniversalTime()
 
 # Gets all Azure Resource Groups beginning with the name Bicep_ and removes them without waiting for the finish
 $rgs = Get-AzResourceGroup -Name Bicep_*
+Write-Host "Resource Groups found: `n${rgs}"
 foreach ($rg in $rgs) {
-    Remove-AzResourceGroup -Name $rg.ResourceGroupName -AsJob
+    Write-Host "Deleting the following Resource Group: ${rg}"
+    Remove-AzResourceGroup -Name $rg.ResourceGroupName -Force -AsJob
 }
 
 # Deallocate all Running VMs that do not have the tag {AlwaysOn: True}
