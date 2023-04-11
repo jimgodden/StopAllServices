@@ -4,12 +4,27 @@ param($Timer)
 # Get the current universal time in the default string format
 $currentUTCtime = (Get-Date).ToUniversalTime()
 
+# Creates a folder for the resource group templates and a subfolder for the day it was grabbed
+if (!(Test-Path ".\ResourceGroupTemplatesArchive\")) {
+    New-Item -ItemType Directory -Name "ResourceGroupTemplatesArchive"
+}
+
+$date = Get-Date -UFormat "%F"
+$archivePath = ".\ResourceGroupTemplatesArchive\${date}\"
+
+if (!(Test-Path  ".\ResourceGroupTemplatesArchive\${date}\")) {
+    New-Item -ItemType Directory -Name $date -Path ".\ResourceGroupTemplatesArchive\"
+}
+
 # Gets all Azure Resource Groups beginning with the name Bicep_ and removes them without waiting for the finish
 $rgs = Get-AzResourceGroup -Name Bicep_*
-Write-Host "Resource Groups found: `n${rgs}"
+
 foreach ($rg in $rgs) {
-    Write-Host "Deleting the following Resource Group: ${rg}"
-    Remove-AzResourceGroup -Name $rg.ResourceGroupName -Force -AsJob
+    $rgName = $rg.ResourceGroupName
+    Write-Host "Saving current ARM Template for the following Resource Group: ${rgName}"
+    Export-AzResourceGroup -ResourceGroupName $rgName -Path $archivePath
+    Write-Host "Deleting the following Resource Group: ${rgName}"
+    Remove-AzResourceGroup -Name $rgName -Force -AsJob
 }
 
 # Deallocate all Running VMs that do not have the tag {AlwaysOn: True}
