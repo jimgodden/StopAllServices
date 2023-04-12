@@ -5,14 +5,14 @@ param($Timer)
 $currentUTCtime = (Get-Date).ToUniversalTime()
 
 # Creates a folder for the resource group templates and a subfolder for the day it was grabbed
-if (!(Test-Path ".\ResourceGroupTemplatesArchive\")) {
+if (!(Test-Path "C:\home\ResourceGroupTemplatesArchive\")) {
     New-Item -ItemType Directory -Name "ResourceGroupTemplatesArchive"
 }
 
 $date = Get-Date -UFormat "%F"
-$archivePath = ".\ResourceGroupTemplatesArchive\${date}\"
+$archivePath = "C:\home\ResourceGroupTemplatesArchive\${date}\"
 
-if (!(Test-Path  ".\ResourceGroupTemplatesArchive\${date}\")) {
+if (!(Test-Path  $archivePath)) {
     New-Item -ItemType Directory -Name $date -Path ".\ResourceGroupTemplatesArchive\"
 }
 
