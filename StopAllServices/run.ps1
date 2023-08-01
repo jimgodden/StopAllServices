@@ -16,8 +16,8 @@ if (!(Test-Path  $archivePath)) {
     New-Item -ItemType Directory -Name $date -Path ".\ResourceGroupTemplatesArchive\"
 }
 
-# Gets all Azure Resource Groups beginning with the name Bicep_ and removes them without waiting for the finish
-$rgs = Get-AzResourceGroup -Name Bicep_*
+# Gets all Azure Resource Groups with the name Sandbox and removes them without waiting for the finish
+$rgs = Get-AzResourceGroup -Name *Sandbox*
 
 foreach ($rg in $rgs) {
     $rgName = $rg.ResourceGroupName
