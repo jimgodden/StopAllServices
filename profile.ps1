@@ -14,7 +14,7 @@
 if ($env:MSI_SECRET) {
     Disable-AzContextAutosave -Scope Process | Out-Null
     Connect-AzAccount -Identity
-    Set-AzContext -Subscription '<enter_sub_Id_here>'
+    Set-AzContext -Subscription '1a283126-08f5-4fff-8784-19fe92c7422e'
 }
 
 # Uncomment the next line to enable legacy AzureRm alias in Azure PowerShell.
