@@ -29,6 +29,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A50E41BF373C4BF7AEDA702501CFCA92 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E1DF1D6AEB774CB9840B9D351344ED59 }}
 
+      - name: Replace text
+        run: |
+          (Get-Content profile.ps1) -replace '<enter_sub_Id_here>','${{ secrets.MCAPSSUBID }}' | Set-Content profile.ps1
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
@@ -36,8 +40,4 @@ jobs:
           app-name: 'anpfa-jg'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-
-      - name: Replace text
-        run: |
-          (Get-Content profile.ps1) -replace '<enter_sub_Id_here>','${{ secrets.MCAPSSUBID }}' | Set-Content profile.ps1
           
