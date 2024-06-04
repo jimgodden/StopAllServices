@@ -36,4 +36,8 @@ jobs:
           app-name: 'anpfa-jg'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
+      - name: Replace text
+        run: |
+          (Get-Content profile.ps1) -replace '<enter_sub_Id_here>','${{ secrets.MCAPSSUBID }}' | Set-Content profile.ps1
           
